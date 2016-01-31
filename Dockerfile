@@ -27,7 +27,7 @@ ADD start-mysqld.sh /start-mysqld.sh
 ADD run.sh /run.sh
 RUN chmod 755 /*.sh
 ADD apache2.conf /etc/apache2/apache2.conf
-ADD my.cnf /etc/mysql/conf.d/my.cnf
+ADD my.cnf /etc/mysql/my.cnf
 ADD supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 
@@ -42,6 +42,9 @@ RUN chmod 755 /*.sh
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
 ENV PHP_ERROR_REPORTING E_COMPILE_ERROR|E_RECOVERABLE_ERROR|E_ERROR|E_CORE_ERROR
+
+# Add default index file
+RUN echo "<?php phpinfo(); ?>" > /var/www/html/index.php
 
 EXPOSE 80
 CMD ["/run.sh"]
