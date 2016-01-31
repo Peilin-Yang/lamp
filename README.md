@@ -44,10 +44,5 @@ PHP Conf Changes
 
 This aims to optimize PHP for web server that does not have too much memory.
 
-	max_execution_time = 30
-	memory_limit = 128M
 	error_reporting = E_COMPILE_ERROR|E_RECOVERABLE_ERROR|E_ERROR|E_CORE_ERROR
-	display_errors = Off
-	log_errors = On
-	error_log = /var/log/php/error.log
-	register_globals = Off
+
