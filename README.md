@@ -1,21 +1,21 @@
-tutum-docker-lamp
-=================
-
-[![Deploy to Tutum](https://s.tutum.co/deploy-to-tutum.svg)](https://dashboard.tutum.co/stack/deploy/)
-
 Out-of-the-box LAMP image (PHP+MySQL)
 
 
-Usage
+Apache2 Conf Changes
 -----
 
-To create the image `tutum/lamp`, execute the following command on the tutum-docker-lamp folder:
+This aims to optimize Apache2 for web server that does not have too much memory.
 
-	docker build -t tutum/lamp .
+KeepAlive Off
 
-You can now push your new image to the registry:
-
-	docker push tutum/lamp
+...
+<IfModule mpm_prefork_module>
+StartServers 2
+MinSpareServers 6
+MaxSpareServers 12
+MaxClients 30
+MaxRequestsPerChild 3000
+</IfModule>
 
 
 Running your LAMP docker image
