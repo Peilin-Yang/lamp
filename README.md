@@ -139,8 +139,8 @@ Where <user> and <pass> are the database username and password set earlier and <
 -----
 *MYSQL_USER*: Set a specific username for the admin account (default 'admin').
 
-*MYSQL_PASS*: Set a specific password for the admin account.
+*MYSQL_PASS*: Set a specific password for the admin account (default a randomly generated password).
 
 *STARTUP_SQL*: Defines one or more SQL scripts separated by spaces to initialize the database. Note that the scripts must be inside the container, so you may need to mount them.
 
-*PHPMYADMIN_ALIAS*: Alias of PHPMyAdmin.
+*PHPMYADMIN_ALIAS*: Alias of PHPMyAdmin (default 'dba').
