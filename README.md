@@ -147,7 +147,7 @@ Adding the site name so that there will be an automatically generated server fil
 
 	docker run -d -p 8080:80 -e SITENAME="sitename" --name=web yangpeilyn/lamp:basic
 	
-This can be togethered with the option ```-v path/to/server/file:/var/www/{sitename}``` to mount a local folder for server files.
+This can be togethered with the option ```-v path/to/server/file:/var/www/{sitename}/public_html/``` to mount a local folder for server files.
 	
 ###Environment variables
 -----
