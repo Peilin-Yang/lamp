@@ -37,13 +37,12 @@ echo "Please remember to change the above password as soon as possible!"
 echo "MySQL user 'root' has no password but only allows local connections"
 echo "========================================================================"
 
-
 # On Create DB ...
 if [ "$ON_CREATE_DB" = "**False**" ]; then
     unset ON_CREATE_DB
 else
     echo "Creating MySQL database ${ON_CREATE_DB}"
-    mysql -uadmin -e "CREATE DATABASE IF NOT EXISTS ${ON_CREATE_DB};"
+    mysql -uroot -e "CREATE DATABASE IF NOT EXISTS ${ON_CREATE_DB};"
     echo "Database created!"
 fi
 
