@@ -16,7 +16,7 @@ SetupPHP ()
 SetupPHPMyadmin() 
 {
     # Add Phpmyadmin
-    sed -i 's/\ \/phpmyadmin/\ \/dba/g' /etc/phpmyadmin/apache.conf
+    sed -i 's/\ \/phpmyadmin/\ \/$PHPMYADMIN_ALIAS/g' /etc/phpmyadmin/apache.conf
     ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
     a2enconf phpmyadmin.conf
 }
@@ -56,5 +56,11 @@ ImportSql()
         fi
     done
 }
+
+CreateMySQLUser
+OnCreateDB
+ImportSql
+SetupPHP
+SetupPHPMyadmin
 
 exec supervisord -n

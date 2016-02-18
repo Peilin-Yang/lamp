@@ -47,7 +47,10 @@ ENV PHP_ERROR_REPORTING E_COMPILE_ERROR|E_RECOVERABLE_ERROR|E_ERROR|E_CORE_ERROR
 
 ENV MYSQL_PASS=**Random** \
     ON_CREATE_DB=**False** \
+    PHPMYADMIN_ALIAS=dba
     
+# Add VOLUMEs to allow backup of config and databases
+VOLUME  ["/etc/mysql", "/var/lib/mysql"]
 
-EXPOSE 80
+EXPOSE 80 3306
 CMD ["/run.sh"]
