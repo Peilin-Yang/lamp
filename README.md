@@ -130,6 +130,11 @@ Also, you can start the new database initializing it with the SQL file:
     sudo docker run -d -v /path/in/host:/var/lib/mysql -e STARTUP_SQL="/tmp/<dump.sql>" -name web yangpeilyn/lamp:basic
 Where <user> and <pass> are the database username and password set earlier and <dump.sql> is the name of the SQL file to be imported.
 
+
+###Setting alias of PHPMyAdmin
+-----
+	docker run -d -p 8080:80 -e PHPMYADMIN_ALIAS="phpmyadmin_alias" -name web yangpeilyn/lamp:basic
+
 ###Environment variables
 -----
 *MYSQL_USER*: Set a specific username for the admin account (default 'admin').
@@ -137,3 +142,5 @@ Where <user> and <pass> are the database username and password set earlier and <
 *MYSQL_PASS*: Set a specific password for the admin account.
 
 *STARTUP_SQL*: Defines one or more SQL scripts separated by spaces to initialize the database. Note that the scripts must be inside the container, so you may need to mount them.
+
+*PHPMYADMIN_ALIAS*: Alias of PHPMyAdmin.
