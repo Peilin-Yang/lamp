@@ -55,9 +55,14 @@ To create the image, execute the following command on the folder:
 	
 	docker build -t yangpeilyn/lamp:basic .
 	
-To run the image and bind to port 3306:
+To run the image and bind to port 8080:
 
-	docker run -d -p 8080:80 -name web yangpeilyn/lamp:basic
+	docker run -d -p 8080:80 --name=web yangpeilyn/lamp:basic
+
+To enter the existing container (*web* is the name of the container):
+
+    docker exec -ti web bash
+
 
 The first time that you run your container, a new user admin with all privileges will be created in MySQL with a random password. To get the password, check the logs of the container by running:
 
@@ -86,7 +91,7 @@ Done!
 -----
 If you want to use a preset password instead of a random generated one, you can set the environment variable MYSQL_PASS to your specific password when running the container:
 
-    docker run -d -p 8080:80 -e MYSQL_PASS="mypass" -name web yangpeilyn/lamp:basic
+    docker run -d -p 8080:80 -e MYSQL_PASS="mypass" --name=web yangpeilyn/lamp:basic
 You can now test your deployment:
 
     mysql -uadmin -p"mypass"
@@ -96,21 +101,21 @@ The admin username can also be set via the MYSQL_USER environment variable.
 -----
 If you want a database to be created inside the container when you start it up for the first time you can set the environment variable ON_CREATE_DB to a string that names the database.
 
-    docker run -d -p 8080:80 -e ON_CREATE_DB="newdatabase" -name web yangpeilyn/lamp:basic
+    docker run -d -p 8080:80 -e ON_CREATE_DB="newdatabase" --name=web yangpeilyn/lamp:basic
 If this is combined with importing SQL files, those files will be imported into the created database.
 
 ###Mounting the database file volume
 -----
 In order to persist the database data, you can mount a local folder from the host on the container to store the database files. To do so:
 
-    docker run -d -v /path/in/host:/var/lib/mysql -name web yangpeilyn/lamp:basic /bin/bash -c "/usr/bin/mysql_install_db"
+    docker run -d -v /path/in/host:/var/lib/mysql --name=web yangpeilyn/lamp:basic /bin/bash -c "/usr/bin/mysql_install_db"
 This will mount the local folder /path/in/host inside the docker in /var/lib/mysql (where MySQL will store the database files by default). mysql_install_db creates the initial database structure.
 
 Remember that this will mean that your host must have /path/in/host available when you run your docker image!
 
 After this you can start your MySQL image, but this time using /path/in/host as the database folder:
 
-    docker run -d -p 8080:80 -v /path/in/host:/var/lib/mysql -name web yangpeilyn/lamp:basic
+    docker run -d -p 8080:80 -v /path/in/host:/var/lib/mysql --name=web yangpeilyn/lamp:basic
     
 ###Migrating an existing MySQL Server
 -----
@@ -127,13 +132,13 @@ To import a SQL backup which is stored for example in the folder /tmp in the hos
     sudo docker run -d -v /tmp:/tmp yangpeilyn/lamp:basic /bin/bash -c "/import_sql.sh <user> <pass> /tmp/<dump.sql>"
 Also, you can start the new database initializing it with the SQL file:
 
-    sudo docker run -d -v /path/in/host:/var/lib/mysql -e STARTUP_SQL="/tmp/<dump.sql>" -name web yangpeilyn/lamp:basic
+    sudo docker run -d -v /path/in/host:/var/lib/mysql -e STARTUP_SQL="/tmp/<dump.sql>" --name=web yangpeilyn/lamp:basic
 Where <user> and <pass> are the database username and password set earlier and <dump.sql> is the name of the SQL file to be imported.
 
 
 ###Setting alias of PHPMyAdmin
 -----
-	docker run -d -p 8080:80 -e PHPMYADMIN_ALIAS="phpmyadmin_alias" -name web yangpeilyn/lamp:basic
+	docker run -d -p 8080:80 -e PHPMYADMIN_ALIAS="phpmyadmin_alias" --name=web yangpeilyn/lamp:basic
 
 ###Environment variables
 -----
