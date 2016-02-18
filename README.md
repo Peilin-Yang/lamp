@@ -80,3 +80,15 @@ You can now test your deployment:
 
     mysql -uadmin -p
 Done!
+
+
+###Setting a specific password for the admin account
+-----
+If you want to use a preset password instead of a random generated one, you can set the environment variable MYSQL_PASS to your specific password when running the container:
+
+    docker run -d -p 8080:80 -e MYSQL_PASS="mypass" -name web yangpeilyn/lamp:basic
+You can now test your deployment:
+
+    mysql -uadmin -p"mypass"
+The admin username can also be set via the MYSQL_USER environment variable.
+
