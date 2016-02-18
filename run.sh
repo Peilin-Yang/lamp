@@ -16,12 +16,12 @@ SetupPHP ()
 SetupPHPMyadmin() 
 {
     # Add Phpmyadmin
-    sed -i 's/\ \/phpmyadmin/\ \/${PHPMYADMIN_ALIAS}/g' /etc/phpmyadmin/apache.conf
+    sed -ri -e "s/\ \/phpmyadmin/\ \/${PHPMYADMIN_ALIAS}/" /etc/phpmyadmin/apache.conf
     ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
     a2enconf phpmyadmin.conf
 }
 
-CreateMySQLUser ()
+CreateMySQLUserandOnCreateDB ()
 {
     if [[ ! -d $VOLUME_HOME/mysql ]]; then
         echo "=> An empty or uninitialized MySQL volume is detected in $VOLUME_HOME"
@@ -31,17 +31,6 @@ CreateMySQLUser ()
         /create_mysql_admin_user.sh
     else
         echo "=> Using an existing volume of MySQL"
-    fi
-}
-
-OnCreateDB()
-{
-    if [ "$ON_CREATE_DB" = "**False**" ]; then
-        unset ON_CREATE_DB
-    else
-        echo "Creating MySQL database ${ON_CREATE_DB}"
-        mysql -uroot -e "CREATE DATABASE IF NOT EXISTS ${ON_CREATE_DB};"
-        echo "Database created!"
     fi
 }
 
@@ -57,8 +46,7 @@ ImportSql()
     done
 }
 
-CreateMySQLUser
-OnCreateDB
+CreateMySQLUserandOnCreateDB
 ImportSql
 SetupPHP
 SetupPHPMyadmin
