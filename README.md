@@ -112,3 +112,21 @@ After this you can start your MySQL image, but this time using /path/in/host as 
 
     docker run -d -p 8080:80 -v /path/in/host:/var/lib/mysql -name web yangpeilyn/lamp:basic
     
+###Migrating an existing MySQL Server
+-----
+In order to migrate your current MySQL server, perform the following commands from your current server:
+
+To dump your databases structure:
+
+    mysqldump -u<user> -p --opt -d -B <database name(s)> > /tmp/dbserver_schema.sql
+To dump your database data:
+
+    mysqldump -u<user> -p --quick --single-transaction -t -n -B <database name(s)> > /tmp/dbserver_data.sql
+To import a SQL backup which is stored for example in the folder /tmp in the host, run the following:
+
+    sudo docker run -d -v /tmp:/tmp yangpeilyn/lamp:basic /bin/bash -c "/import_sql.sh <user> <pass> /tmp/<dump.sql>"
+Also, you can start the new database initializing it with the SQL file:
+
+    sudo docker run -d -v /path/in/host:/var/lib/mysql -e STARTUP_SQL="/tmp/<dump.sql>" -name web yangpeilyn/lamp:basic
+Where <user> and <pass> are the database username and password set earlier and <dump.sql> is the name of the SQL file to be imported.
+
