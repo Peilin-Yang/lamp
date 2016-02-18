@@ -2,25 +2,6 @@
 
 VOLUME_HOME="/var/lib/mysql"
 
-SetupPHP ()
-{
-    sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE}/" \
-        -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" \
-        -e "s/^error_reporting.*/error_reporting = ${PHP_ERROR_REPORTING}/" /etc/php5/apache2/php.ini
-
-    # Add default index file
-    rm /var/www/html/*
-    echo "<?php phpinfo(); ?>" > /var/www/html/index.php
-}
-
-SetupPHPMyadmin() 
-{
-    # Add Phpmyadmin
-    sed -ri -e "s/\ \/phpmyadmin/\ \/${PHPMYADMIN_ALIAS}/" /etc/phpmyadmin/apache.conf
-    ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
-    a2enconf phpmyadmin.conf
-}
-
 CreateMySQLUserandOnCreateDB ()
 {
     if [[ ! -d $VOLUME_HOME/mysql ]]; then
@@ -46,9 +27,43 @@ ImportSql()
     done
 }
 
+SetupPHP ()
+{
+    sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE}/" \
+        -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" \
+        -e "s/^error_reporting.*/error_reporting = ${PHP_ERROR_REPORTING}/" /etc/php5/apache2/php.ini
+
+    # Add default index file
+    rm /var/www/html/*
+    echo "<?php phpinfo(); ?>" > /var/www/html/index.php
+}
+
+SetupPHPMyadmin() 
+{
+    # Add Phpmyadmin
+    dpkg-reconfigure -plow phpmyadmin
+    sed -ri -e "s/\ \/phpmyadmin/\ \/${PHPMYADMIN_ALIAS}/" /etc/phpmyadmin/apache.conf
+    ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+    a2enconf phpmyadmin.conf
+}
+
+SetupWebsite() 
+{
+    a2dissite *default
+    mkdir -p /var/www/${SITENAME}
+    mkdir -p /var/www/${SITENAME}/public_html
+    mkdir -p /var/www/${SITENAME}/log
+    mkdir -p /var/www/${SITENAME}/backups
+
+    sed -ri -e "s/SERVERNAMETOBEREPLACED/${SITENAME}/" /etc/apache2/sites-available/website.conf
+
+    a2ensite website.conf
+}
+
 CreateMySQLUserandOnCreateDB
 ImportSql
 SetupPHP
 SetupPHPMyadmin
+SetupWebsite
 
 exec supervisord -n

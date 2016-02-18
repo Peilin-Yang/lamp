@@ -33,6 +33,9 @@ ADD mysqld_charset.cnf /etc/mysql/conf.d/mysqld_charset.cnf
 ADD supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 
+# Add web site conf folder
+ADD website.conf /etc/apache2/sites-available/website.conf
+
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql/*
 
@@ -45,6 +48,7 @@ ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
 ENV PHP_ERROR_REPORTING E_COMPILE_ERROR|E_RECOVERABLE_ERROR|E_ERROR|E_CORE_ERROR
 ENV PHPMYADMIN_ALIAS dba
+ENV SITENAME testsite
 ENV MYSQL_PASS=**Random** \
     ON_CREATE_DB=**False** 
     
