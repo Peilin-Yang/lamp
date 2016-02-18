@@ -46,3 +46,15 @@ This aims to optimize PHP for web server that does not have too much memory.
 
 	error_reporting = E_COMPILE_ERROR|E_RECOVERABLE_ERROR|E_ERROR|E_CORE_ERROR
 
+
+Usage
+-----
+
+To create the image, execute the following command on the folder:
+	
+	docker build -t yangpeilyn/lamp:basic .
+	
+To run the image and bind to port 3306:
+
+	docker run -d -p 8080:80 -name web yangpeilyn/lamp:basic
+
