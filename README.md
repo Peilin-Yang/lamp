@@ -1,7 +1,7 @@
 Out-of-the-box LAMP image (PHP+MySQL)
 
 
-Apache2 Conf Changes
+##Apache2 Conf Changes
 -----
 
 This aims to optimize Apache2 for web server that does not have too much memory.
