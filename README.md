@@ -1,7 +1,8 @@
 Out-of-the-box LAMP image (PHP+MySQL)
 
+#All Changes
 
-##Apache2 Conf Changes
+###Apache2 Conf Changes
 -----
 
 This aims to optimize Apache2 for web server that does not have too much memory.
@@ -17,7 +18,7 @@ This aims to optimize Apache2 for web server that does not have too much memory.
 	MaxRequestsPerChild 3000
 	</IfModule>
 
-MySQL Conf Changes
+###MySQL Conf Changes
 -----
 
 This aims to optimize MySQL for web server that does not have too much memory.
@@ -39,7 +40,7 @@ This aims to optimize MySQL for web server that does not have too much memory.
 	table_open_cache = 32M
 	key_buffer_size = 32M
 
-PHP Conf Changes
+###PHP Conf Changes
 ------------------------------
 
 This aims to optimize PHP for web server that does not have too much memory.
@@ -47,7 +48,7 @@ This aims to optimize PHP for web server that does not have too much memory.
 	error_reporting = E_COMPILE_ERROR|E_RECOVERABLE_ERROR|E_ERROR|E_CORE_ERROR
 
 
-Usage
+#Usage
 -----
 
 To create the image, execute the following command on the folder:
