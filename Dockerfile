@@ -19,7 +19,8 @@ RUN apt-get update && \
     php5-gd \
     php5-curl \
     php-pear \
-    php-apc
+    php-apc \
+    phpmyadmin
 
 # Add image configuration and scripts
 ADD start-apache2.sh /start-apache2.sh
@@ -28,6 +29,7 @@ ADD run.sh /run.sh
 RUN chmod 755 /*.sh
 ADD apache2.conf /etc/apache2/apache2.conf
 ADD my.cnf /etc/mysql/my.cnf
+ADD mysqld_charset.cnf /etc/mysql/conf.d/mysqld_charset.cnf
 ADD supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 
@@ -38,13 +40,28 @@ RUN rm -rf /var/lib/mysql/*
 ADD create_mysql_admin_user.sh /create_mysql_admin_user.sh
 RUN chmod 755 /*.sh
 
+# Add Phpmyadmin
+RUN sed -i 's/\ \/phpmyadmin/\ \/dba/g' /etc/phpmyadmin/apache.conf
+RUN ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+RUN a2enconf phpmyadmin.conf
+
 #Enviornment variables to configure php
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
 ENV PHP_ERROR_REPORTING E_COMPILE_ERROR|E_RECOVERABLE_ERROR|E_ERROR|E_CORE_ERROR
 
 # Add default index file
+RUN rm /var/www/html/*
 RUN echo "<?php phpinfo(); ?>" > /var/www/html/index.php
+
+ENV MYSQL_USER=admin \
+    MYSQL_PASS=**Random** \
+    ON_CREATE_DB=**False** \
+    REPLICATION_MASTER=**False** \
+    REPLICATION_SLAVE=**False** \
+    REPLICATION_USER=replica \
+    REPLICATION_PASS=replica \
+    ON_CREATE_DB=**False**
 
 EXPOSE 80
 CMD ["/run.sh"]
