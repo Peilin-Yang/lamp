@@ -6,6 +6,7 @@ MAINTAINER Peilin Yang <yangpeilyn@gmail.com>
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
   apt-get -y install \
+    lxc \
     supervisor \
     git \
     curl \

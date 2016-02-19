@@ -42,7 +42,9 @@ SetupPHPMyadmin()
 {
     # Add Phpmyadmin
     dpkg-reconfigure -plow phpmyadmin
-    sed -ri -e "s/\ \/phpmyadmin/\ \/${PHPMYADMIN_ALIAS}/" /etc/phpmyadmin/apache.conf
+    # only change the first occurence of phpmyadmin
+    sed -ri -e '0,/table_uiprefs/s//table__uiprefs/' /etc/phpmyadmin/config.inc.php
+    sed -ri -e '0,/phpmyadmin/s//${PHPMYADMIN_ALIAS}/' /etc/phpmyadmin/apache.conf
     ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
     a2enconf phpmyadmin.conf
 }
