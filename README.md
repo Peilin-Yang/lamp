@@ -132,7 +132,7 @@ To import a SQL backup which is stored for example in the folder /tmp in the hos
     sudo docker run -d -v /tmp:/tmp yangpeilyn/lamp:basic /bin/bash -c "/import_sql.sh <user> <pass> /tmp/<dump.sql>"
 Also, you can start the new database initializing it with the SQL file:
 
-    sudo docker run -d -v /path/in/host:/var/lib/mysql -e STARTUP_SQL="/tmp/<dump.sql>" --name=web yangpeilyn/lamp:basic
+    sudo docker run -d -v /path/in/host:/tmp/ -e STARTUP_SQL="/tmp/<dump.sql>" --name=web yangpeilyn/lamp:basic
 Where <user> and <pass> are the database username and password set earlier and <dump.sql> is the name of the SQL file to be imported.
 
 
@@ -152,7 +152,7 @@ This can be togethered with the option ```-v path/to/server/file:/var/www/{siten
 	
 ###All-in-One Starter
 -----
-	docker run -d -p 8080:80 -e ON_CREATE_DB="rires" -e SITENAME="rires" -e STARTUP_SQL="rires.sql" -v /home/ypeilin/Dropbox/code/RIRES/:/var/www/rires/public_html/ -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/bin/docker -v /home/ypeilin/Downloads/:/var/lib/mysql --name=web yangpeilyn/lamp:basic
+	docker run -d -p 8080:80 -e ON_CREATE_DB="db_name" -e SITENAME="sitename" -e STARTUP_SQL="/tmp/sql_file_name" -v /path/to/server/files/:/var/www/sitename/public_html/ -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/bin/docker -v /path/to/backup/sql/file/:/tmp --name=web yangpeilyn/lamp:basic
 
 	
 ###Environment variables
