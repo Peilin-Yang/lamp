@@ -139,7 +139,16 @@ Where <user> and <pass> are the database username and password set earlier and <
 ###Setting alias of PHPMyAdmin
 -----
 	docker run -d -p 8080:80 -e PHPMYADMIN_ALIAS="phpmyadmin_alias" --name=web yangpeilyn/lamp:basic
+	
+	
+###Adding site name
+-----
+Adding the site name so that there will be an automatically generated server file folder for it. Alos, Apache2 will make that folder as the default server file folder.
 
+	docker run -d -p 8080:80 -e SITENAME="sitename" --name=web yangpeilyn/lamp:basic
+	
+This can be togethered with the option ```-v path/to/server/file:/var/www/{sitename}/public_html/``` to mount a local folder for server files.
+	
 ###Environment variables
 -----
 *MYSQL_USER*: Set a specific username for the admin account (default 'admin').
