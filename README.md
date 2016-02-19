@@ -149,6 +149,12 @@ Adding the site name so that there will be an automatically generated server fil
 	
 This can be togethered with the option ```-v path/to/server/file:/var/www/{sitename}/public_html/``` to mount a local folder for server files.
 	
+	
+###All-in-One Starter
+-----
+	docker run -d -p 8080:80 -e ON_CREATE_DB="rires" -e SITENAME="rires" -e STARTUP_SQL="rires.sql" -v /home/ypeilin/Dropbox/code/RIRES/:/var/www/rires/public_html/ -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/bin/docker -v /home/ypeilin/Downloads/:/var/lib/mysql --name=web yangpeilyn/lamp:basic
+
+	
 ###Environment variables
 -----
 *MYSQL_USER*: Set a specific username for the admin account (default 'admin').
