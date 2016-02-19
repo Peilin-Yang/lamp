@@ -148,7 +148,12 @@ Adding the site name so that there will be an automatically generated server fil
 	docker run -d -p 8080:80 -e SITENAME="sitename" --name=web yangpeilyn/lamp:basic
 	
 This can be togethered with the option ```-v path/to/server/file:/var/www/{sitename}/public_html/``` to mount a local folder for server files.
-	
+
+###Enable run docker container inside docker container (docker-in-docker)
+-----	
+If we actually just need a "sibling" container (i.e. not a "child" container) we can use the following starter command:
+	docker run -d -p 8080:80 -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/bin/docker --name=web yangpeilyn/lamp:basic
+Then call "docker" inside the original container can be viewed as running container in the hosting system.
 	
 ###All-in-One Starter
 -----
