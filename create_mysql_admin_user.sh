@@ -46,4 +46,3 @@ else
     echo "Database created!"
 fi
 
-mysqladmin -uroot shutdown

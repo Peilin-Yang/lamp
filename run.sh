@@ -27,6 +27,11 @@ ImportSql()
     done
 }
 
+ShutdownSqlAdmin()
+{
+    mysqladmin -uroot shutdown
+}
+
 SetupPHP ()
 {
     sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE}/" \
@@ -64,6 +69,7 @@ SetupWebsite()
 
 CreateMySQLUserandOnCreateDB
 ImportSql
+ShutdownSqlAdmin
 SetupPHP
 SetupPHPMyadmin
 SetupWebsite
