@@ -159,7 +159,7 @@ Then call "docker" inside the original container can be viewed as running contai
 	
 ###All-in-One Starter
 -----
-	docker run -d -p 8080:80 -e ON_CREATE_DB="db_name" -e SITENAME="sitename" -e STARTUP_SQL="/tmp/sql_file_name" -v /path/to/server/files/:/var/www/sitename/public_html/ -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/bin/docker -v /path/to/backup/sql/file/:/tmp --name=web yangpeilyn/lamp:basic
+	docker run -d -p 8080:80 -e ON_CREATE_DB="db_name" -e SITENAME="sitename" -e STARTUP_SQL="/mysql_backup/sql_file_name" -v /path/to/server/files/:/var/www/sitename/public_html/ -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/bin/docker -v /path/to/backup/sql/file/:/mysql_backup/ --name=web yangpeilyn/lamp:basic
 
 	
 ###Environment variables
