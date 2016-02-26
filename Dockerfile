@@ -21,8 +21,7 @@ RUN apt-get update && \
     php5-curl \
     php-pear \
     php-apc \
-    phpmyadmin \
-    msmtp
+    phpmyadmin 
 
 # Add image configuration and scripts
 ADD start-apache2.sh /start-apache2.sh

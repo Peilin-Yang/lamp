@@ -43,6 +43,12 @@ SetupPHP ()
     echo "<?php phpinfo(); ?>" > /var/www/html/index.php
 }
 
+SetupPHPSendMail ()
+{
+    pear install Net_SMTP
+    pear install Mail
+}
+
 SetupPHPMyadmin() 
 {
     # Add Phpmyadmin
@@ -71,6 +77,7 @@ CreateMySQLUserandOnCreateDB
 ImportSql
 ShutdownSqlAdmin
 SetupPHP
+SetupPHPSendMail
 SetupPHPMyadmin
 SetupWebsite
 
