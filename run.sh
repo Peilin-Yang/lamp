@@ -78,7 +78,7 @@ SetupCronJobs()
     for FILE in ${CRON_JOBS}; do
         fn=$(basename $FILE)
         echo "=> Setting Cron Job: ${fn}"
-        cp ${fn} /etc/cron.d/
+        cp ${FILE} /etc/cron.d/${fn}
         chmod 0644 /etc/cron.d/${fn}
         touch /var/log/${fn}.log
         cron && tail -f /var/log/${fn}.log
