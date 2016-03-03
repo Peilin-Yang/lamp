@@ -73,6 +73,17 @@ SetupWebsite()
     a2ensite website.conf
 }
 
+SetupCronJobs() 
+{
+    for FILE in ${CRON_JOBS}; do
+        echo "=> Setting Cron Job: ${FILE}"
+        cp ${FILE} /etc/cron.d/
+        chmod 0644 /etc/cron.d/${FILE}
+        touch /var/log/${FILE}.log
+        cron && tail -f /var/log/${FILE}.log
+    done
+}
+
 CreateMySQLUserandOnCreateDB
 ImportSql
 ShutdownSqlAdmin
@@ -80,5 +91,6 @@ SetupPHP
 SetupPHPSendMail
 SetupPHPMyadmin
 SetupWebsite
+SetupCronJobs
 
 exec supervisord -n
