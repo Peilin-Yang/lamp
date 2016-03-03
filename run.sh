@@ -76,11 +76,12 @@ SetupWebsite()
 SetupCronJobs() 
 {
     for FILE in ${CRON_JOBS}; do
-        echo "=> Setting Cron Job: ${FILE}"
-        cp ${FILE} /etc/cron.d/
-        chmod 0644 /etc/cron.d/${FILE}
-        touch /var/log/${FILE}.log
-        cron && tail -f /var/log/${FILE}.log
+        fn=$(basename $FILE)
+        echo "=> Setting Cron Job: ${fn}"
+        cp ${fn} /etc/cron.d/
+        chmod 0644 /etc/cron.d/${fn}
+        touch /var/log/${fn}.log
+        cron && tail -f /var/log/${fn}.log
     done
 }
 
